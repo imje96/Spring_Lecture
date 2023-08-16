@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation=
+	   "http://www.springframework.org/schema/beans
+	   	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- Car c1 = new Car(new HankookTire); -->
+
+
+	<bean id="hankookTire" class="di.xml01.HankookTire">
+	</bean>
+	<bean id="car" class="di.xml01.Car">
+		<constructor-arg ref="hankookTire"/>
+	</bean>
+</beans>
