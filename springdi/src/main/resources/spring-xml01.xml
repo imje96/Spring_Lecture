@@ -1,16 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation=
-	   "http://www.springframework.org/schema/beans
-	   	http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-<!-- Car c1 = new Car(new HankookTire); -->
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    https://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
 	<bean id="hankookTire" class="di.xml01.HankookTire">
 	</bean>
 	<bean id="car" class="di.xml01.Car">
-		<constructor-arg ref="hankookTire"/>
+		<constructor-arg ref="hankookTire" />
 	</bean>
+
+	<!-- Car("genesis", hankookTire) 와 같은 의미 -->
+	<bean id="car1" class="di.xml01.Car">
+		<constructor-arg value="genesis"></constructor-arg>
+		<constructor-arg ref="hankookTire"></constructor-arg>
+	</bean>
+
+	<!-- public Car(String carName, Tire t) { this.carName = carName; this.tire 
+		= t;} public Car(Tire t, String carName) { this.carName = carName; this.tire 
+		= t; } -->
+	<bean id="car2" class="di.xml01.Car">
+		<constructor-arg ref="hankookTire" index="1"></constructor-arg>
+		<constructor-arg value="genesis" index="0"></constructor-arg>
+	</bean>
+
+	<bean id="car3" class="di.xml01.Car">
+		<constructor-arg value="genesis" index="0"></constructor-arg>
+		<constructor-arg value="2020" type="int" index="1"></constructor-arg>
+		<constructor-arg ref="hankookTire" index="2"></constructor-arg>
+	</bean>
+
+	<bean id="car4" class="di.xml01.Car">
+		<constructor-arg>
+			<ref bean="hankookTire" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="car5" class="di.xml01.Car">
+		<property name="driver">
+		  <list>
+		      <value>엄마</value>
+		      <value>아빠</value>
+		      <value>언니</value>
+		      <value>오빠</value>
+		  </list>
+		</property>
+	</bean>
+	
+	<bean id="car6" class="di.xml01.Car">
+		<property name="history">
+			<map>
+				<entry key="20230817" value="엔진오일교체"> </entry>
+				<entry key="20230818" value="타이어교체"> </entry>
+				<entry key="20230819" value="핸들교체"> </entry>
+				<entry key="20230820" value="창문교체"> </entry>
+			</map>
+		</property>
+	</bean>
+	
 </beans>
