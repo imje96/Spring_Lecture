@@ -24,16 +24,42 @@ public class BoardDAO {
 //	   selectbyName();
 //	   selectbyName2();
 //	   selectbyNo();
+//		updateTitle();		
+		//System.out.println("먼저");
+		//selectAllPost();
 		
-		System.out.println("먼저");
-		selectAllPost();
-		
-		updateTitle();
-		
-		System.out.println("나중");
-		selectAllPost();
-	}
+		selectDynamicSQL();
 
+		System.out.println("나중");		
+//		selectAllPost();
+	}
+	
+	public void selectDynamicSQL2() {
+		// 홍길동이 쓴 "이벤트 공지" 글 찾아
+		BoardVO inputboardVO = new BoardVO();
+		inputboardVO.setTitle("이벤트 공지");
+		inputboardVO.setWriter("홍길동");
+		List<BoardVO> boardlist = 
+		sqlSession.selectList("mybatis.BoardDAO.selectDSQL", inputboardVO);
+		
+		for (BoardVO resultboardVO : boardlist) {
+			System.out.println(resultboardVO);
+		}
+	}
+	
+	public void selectDynamicSQL() {
+		// 홍길동이 쓴 "이벤트 공지" 글 찾아
+		BoardVO inputboardVO = new BoardVO();
+		inputboardVO.setTitle("이벤트 공지");
+		inputboardVO.setWriter("홍길동");
+		List<BoardVO> boardlist = 
+		sqlSession.selectList("mybatis.BoardDAO.selectDSQL", inputboardVO);
+		
+		for (BoardVO resultboardVO : boardlist) {
+			System.out.println(resultboardVO);
+		}
+	}
+		
 	public void deletebyName() {
 		sqlSession.delete("mybatis.BoardDAO.deletebyName", "이호창");
 		sqlSession.commit();

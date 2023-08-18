@@ -13,6 +13,26 @@
  		<result column="count" property="count"/>
 	</resultMap>
 
+	<select id="selectDSQL2" parameterType="boardVO" resultMap="boardMap"> 
+      SELECT * 
+      FROM t_board
+      where writer=#{writer}
+	        And title=#{title}
+   </select>
+
+	<select id="selectDSQL" parameterType="boardVO" resultMap="boardMap"> 
+      SELECT * 
+      FROM t_board
+      <where>
+         <if test="writer != null">
+            writer=#{writer}
+         </if>
+         <if test="title != null">
+            and title=#{title}
+         </if>
+      </where>
+   </select>
+
 	<delete id="deletebyName" parameterType="String" >
 		delete from t_board
 		where writer = #{abc}
