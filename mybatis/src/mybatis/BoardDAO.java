@@ -23,8 +23,19 @@ public class BoardDAO {
 //      insertNewPost();
 //	   selectAllPost();
 //	   selectbyName();
-//	   selectbyName2();
-	   selectbyNo();
+	   selectbyName2();
+//	   selectbyNo();
+   }
+   
+   public void selectbyNo2() {
+//		Map을 resultType으로 준다
+	   Map<String, Object> map
+	   	= sqlSession.selectOne("mybatis.BoardDAO.selectbyNo2", 10);
+	   Set<String> keyset = map.keySet(); //{no, title, writer}
+	   for(String key: keyset) {
+		   System.out.println(key + " : " + map.get(key));
+	   }
+	   
    }
    
    public void selectbyNo() {
@@ -41,6 +52,8 @@ public class BoardDAO {
 		System.out.println(boardVO);
 	}
    }
+   
+
    
    public void selectbyName() {
 	   BoardVO boardVO1 = new BoardVO();
