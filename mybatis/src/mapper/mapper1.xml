@@ -2,10 +2,36 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="name1">
-<!-- 
-  <select id="selectBlog" resultType="Blog">
-    select * from Blog where id = #{id}
-  </select>
- -->
+  <!-- 보통 namespace는 패키지명으로 함 -->
+<mapper namespace="mybatis.BoardDAO">
+	<!-- 돌려받는 값도 지정할 수 있음 -->
+	<select id="selectbyNo" parameterType="int" resultType="boardVO" >
+		select * from t_board
+		where no = #{abc}
+	</select>
+	
+	<select id="selectbyName2" parameterType="String" resultType="boardVO" >
+		select * from t_board
+		where writer = #{aaa}
+	</select>
+	
+	<select id="selectbyName" parameterType="boardVO" resultType="boardVO" >
+		select * from t_board
+		where writer = #{writer}
+	</select>
+	
+	<select id="selectAll" resultType="boardVO" >
+		select * from t_board
+		order by no desc
+	</select>
+	
+	<insert id="insertNewPost">
+		insert into t_board (no, title, writer, content)
+		values(seq_t_board_no.nextval, '제목: 오늘의 날씨', '홍길동', '안녕하세요')	
+	</insert>
+
+	<insert id="insertNewPost2" parameterType="boardVO">
+		insert into t_board (no, title, writer, content)
+		values(seq_t_board_no.nextval, #{title}, #{writer}, #{content})
+	</insert>
 </mapper>
