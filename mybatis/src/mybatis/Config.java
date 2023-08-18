@@ -19,7 +19,6 @@ public class Config {
             SqlSessionFactory sqlSessionFactory 
             	= new SqlSessionFactoryBuilder().build(inputStream);
             sqlSession = sqlSessionFactory.openSession();
-            System.out.println("hhhh");
             System.out.println(sqlSession);
            
         } catch (Exception e) {

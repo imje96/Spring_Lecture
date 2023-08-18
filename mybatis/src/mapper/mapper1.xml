@@ -9,17 +9,25 @@
 <mapper namespace="mybatis.BoardDAO">
 	<!-- 돌려받는 값도 지정할 수 있음 -->
 	<resultMap type="mybatis.BoardVO" id="boardMap">
-	<!-- 
-	 	<result column="title" property="title"/>
-		<result column="writer" property="writer"/>
-		<result column="no" property="no"/>
-	 -->
 		<result column="reg_date" property="regDate"/>
-<!-- 
-		<result column="content" property="content"/>
- -->		
  		<result column="count" property="count"/>
 	</resultMap>
+
+	<delete id="deletebyName" parameterType="String" >
+		delete from t_board
+		where writer = #{abc}
+	</delete>
+
+	<delete id="deletebyNo" parameterType="int" >
+		delete from t_board
+		where no = #{abc}
+	</delete>
+
+	<update id="updateTitle">
+		update t_board 
+		set title = #{title}
+		where no = #{no}
+	</update>
 
 	<select id="selectbyNo2" parameterType="map" resultType="int" >
 		select no, title, writer, content, reg_date as regDate, count
