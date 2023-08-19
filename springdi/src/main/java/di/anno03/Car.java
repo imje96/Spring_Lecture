@@ -1,7 +1,5 @@
 package di.anno03;
 
-import javax.annotation.*;
-
 import org.springframework.beans.factory.annotation.*;
 
 public class Car {
@@ -20,11 +18,15 @@ public class Car {
 		this.tire = t;
 		System.out.println("Car(Tire t) 생성자입니다.");
 	}
+	
+
+	
 
 	public Tire getTire() {
 		return tire;
 	}
-
+//	@Qualifier("k")
+//	@Autowired
 	public void setTire(Tire tire) {
 		this.tire = tire;
 		System.out.println("setTire(Tire tire)입니다.");
@@ -32,7 +34,7 @@ public class Car {
 	
 	
 	public void printTireBrand() {
-	System.out.println("타이어브랜드는 " + tire.getClass());
+	System.out.println("타이어브랜드는 " + tire.getTireBrand());
 	}
 	
 }

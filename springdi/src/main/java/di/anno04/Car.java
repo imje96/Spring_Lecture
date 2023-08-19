@@ -1,21 +1,23 @@
 package di.anno04;
 
-import javax.annotation.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+
 @Component
 public class Car {
-//	@Qualifier("k")
-//	@Autowired
+
+
 	private Tire tire;
-	
+
 	public Car() {
 		System.out.println("Car() 생성자입니다.");
 	}
-	
-	
 	@Autowired
-	public Car(@Qualifier("h1") Tire t) {
+	public Car(@Qualifier("h") Tire t) {
 		this.tire = t;
 		System.out.println("Car(Tire t) 생성자입니다.");
 	}
@@ -26,12 +28,10 @@ public class Car {
 
 	public void setTire(Tire tire) {
 		this.tire = tire;
-		System.out.println("setTire(Tire tire)입니다.");
 	}
-	
-	
-	public void printTireBrand() {
-	System.out.println("타이어브랜드는 " + tire.getClass());
+
+	public void printTireBrnad() {
+		System.out.println("타이어브랜드는 " + tire.getTireBrand());
 	}
-	
+
 }

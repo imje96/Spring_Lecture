@@ -3,13 +3,13 @@ package di.anno03;
 import org.springframework.context.*;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
-public class driverMain {
+public class DriverMain {
 
 	public static void main(String[] args) {
 		ApplicationContext context
 		= new GenericXmlApplicationContext("spring-anno03.xml");
 		
-		Car c = context.getBean("car", Car.class);
+		Car c = (Car)context.getBean("car");
 		c.printTireBrand();
 	}
 }

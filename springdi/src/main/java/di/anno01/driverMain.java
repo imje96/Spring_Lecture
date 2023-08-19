@@ -3,7 +3,7 @@ package di.anno01;
 import org.springframework.context.*;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
-public class driverMain {
+public class DriverMain {
 
 	public static void main(String[] args) {
 		ApplicationContext context
