@@ -12,6 +12,32 @@
 		<result column="reg_date" property="regDate"/>
  		<result column="count" property="count"/>
 	</resultMap>
+	
+	<select id="selectDforeach2" parameterType="boardVO" resultType="boardVO">
+		select * from t_board
+			where no in
+			<foreach collection="numbers" item="abc" 
+			separator="," open="(" close=")">
+			#{abc}
+			</foreach>
+	</select>
+	
+	<select id="selectDforeach1" parameterType="int[]" resultType="boardVO">
+		select * from t_board
+			where no in
+			<foreach collection="array" item="abc" 
+			separator="," open="(" close=")">
+			#{abc}
+			</foreach>
+	</select>
+	
+	<select id="selectDSQLif1"  resultType="boardVO">
+		select * from t_board
+			<if test="title != null">
+				<where> title=#{title}</where>
+			</if>
+		
+	</select>
 
 	<select id="selectDSQL2" parameterType="boardVO" resultMap="boardMap"> 
       SELECT * 
@@ -52,7 +78,8 @@
 	<select id="selectbyNo2" parameterType="map" resultType="int" >
 		select no, title, writer, content, reg_date as regDate, count
 		from t_board
-		where no = #{abc}
+  	where no = #{abc}
+<!--  	where writer like '${writer}' -->
 	</select>
 
 	<select id="selectbyNo" parameterType="int" resultType="boardVO" >

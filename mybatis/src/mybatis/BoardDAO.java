@@ -25,14 +25,55 @@ public class BoardDAO {
 //	   selectbyName2();
 //	   selectbyNo();
 //		updateTitle();		
-		//System.out.println("먼저");
+		System.out.println("시작");
 		//selectAllPost();
 		
-		selectDynamicSQL();
-
-		System.out.println("나중");		
+//		selectDynamicSQL();
+//		System.out.println("나중");		
 //		selectAllPost();
+//		selectDynamicSQLif();
+//		selectDforeach();
+		selectDforeach2();
 	}
+	
+	public void selectDforeach2() { //foreach
+		BoardVO b1 = new BoardVO();
+		int[] a1 = {1,2,3,4,5,6,7};
+		b1.setNumbers(a1);
+		
+		List<BoardVO> boardlist
+		= sqlSession.selectList("mybatis.BoardDAO.selectDforeach2");
+		for (BoardVO boardVO : boardlist) {
+			System.out.println(boardVO);
+		}
+	}
+	
+	public void selectDforeach() { //foreach
+		int[] a1 = {1,2,3,4,5,6};
+		List<BoardVO> boardlist
+		= sqlSession.selectList("mybatis.BoardDAO.selectDforeach1", a1);
+		for (BoardVO boardVO : boardlist) {
+			System.out.println(boardVO);
+		}
+	}
+	
+	public void selectDynamicSQLif() {
+		//id="selectDSQLif"
+		//
+		
+			BoardVO board = new BoardVO();
+			board.setTitle("좋은아침");
+			List<BoardVO> boardlist
+			
+			= sqlSession.selectList("mybatis.BoardDAO.selectDSQLif1", board); 
+//			= sqlSession.selectList("mybatis.BoardDAO.selectDSQLif1", "좋은아침"); 
+			
+
+			for (BoardVO boardVO : boardlist) {
+					System.out.println(boardVO);
+				}
+	}
+	
 	
 	public void selectDynamicSQL2() {
 		// 홍길동이 쓴 "이벤트 공지" 글 찾아
