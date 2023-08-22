@@ -8,6 +8,7 @@
 </head>
 <body>
 	HELLO.JSP 입니다
-	welcome message - ${msg}
+	welcome message - ${msg}<br>
+	pathVariable = ${n}
 </body>
 </html>
