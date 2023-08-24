@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length;
 public class BoardVO {
 	private int no;
 	
-	@Length(max=50, min=40)
+	//@Length(max=50, min=40)
 	@NotEmpty(message = "title이 비어있습니다.")
 	private String title;
 	@NotEmpty(message = "필수항목")
