@@ -1,6 +1,7 @@
 package kr.ac.kopo.member.vo;
 
 public class MemberVO {
+
 	private int no;
 	private String id;
 	private String password;

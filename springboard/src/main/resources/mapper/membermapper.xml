@@ -7,6 +7,11 @@
   <!-- 보통 namespace는 패키지명으로 함 -->
 <mapper namespace="springboard.member.dao.MemberDAO">
 
+	<insert id="join" parameterType="kr.ac.kopo.member.vo.MemberVO">						
+	insert into t_member(no, id, password, name, addr)
+	values(seq_t_member_no.netxtval, #{id}, #{password}, #{name}, #{addr})	
+	</insert>	
+
 	<select id="login" parameterType="kr.ac.kopo.member.vo.LoginVO"
 						resultType="kr.ac.kopo.member.vo.MemberVO">
 						
