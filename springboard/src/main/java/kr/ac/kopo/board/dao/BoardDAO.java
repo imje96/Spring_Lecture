@@ -7,4 +7,6 @@ public interface BoardDAO {
     List<BoardVO> getAllPost();
     BoardVO getPostbyNo(int no);
     void writeNewPost(BoardVO boardVO);
+    void increaseCount(int no);
+    void decreaseCount(int no);
 }

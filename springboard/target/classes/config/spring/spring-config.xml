@@ -1,88 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context   
     http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/mvc
-    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/tx
+    https://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task.xsd">
+
 
 	<context:component-scan base-package="kr.ac.kopo" />
-    <mvc:annotation-driven>
-    	<mvc:message-converters>
-    	    <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-		    	<property name="supportedMediaTypes">
-        			<list>
-          				<value>text/html; charset=UTF-8</value>
-        			</list>
-      		  	</property>
-    		</bean>    	
-    	</mvc:message-converters>
-    </mvc:annotation-driven>   
+
+
+
+	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 	<mvc:view-resolvers>
 		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" />
 	</mvc:view-resolvers>
 
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
 
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" 
-				  value="oracle.jdbc.driver.OracleDriver"></property>
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.OracleDriver"></property>
 		<property name="url" value="jdbc:oracle:thin:@jieuncloud_high?TNS_ADMIN=C:/oracle/Wallet_jieuncloud"/>
-        <property name="username" value="admin"/>
+        <property name="username" value="ADMIN"/>
         <property name="password" value="Kopodapass2023!"/>
-
 	</bean>
- 
-	
+
 	<bean id="sqlSessionFactory"
-			class="org.mybatis.spring.SqlSessionFactoryBean">
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 위에서 만든 DB정보 대입 -->
 		<property name="dataSource" ref="dataSource"></property>
-		<property 	name="configLocation"
-					value="classpath:config/mybatis/mybatis-config.xml"/>
-		<property name="mapperLocations" 
-					value="classpath:mapper/*.xml"></property>	
+		<property name="configLocation"
+			value="classpath:config/mybatis/mybatis-config.xml"></property>
+		<property name="mapperLocations"
+			value="classpath:mapper/*.xml"></property>
 	</bean>
-	<bean 	id="sqlSessionTemplate"
-			class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlSessionFactory"/>
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
-	
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>locale.messages</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+
 	<mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/**/"/>
-            
-            <mvc:exclude-mapping path="/board"/>
-            <mvc:exclude-mapping path="/login"/>
-            <mvc:exclude-mapping path="/resources/**"/>
-   
-            <ref bean="loginInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+		<!-- 다국어 처리 interceptor -->
+		<mvc:interceptor>	
+			<mvc:mapping path="/**/" />
+			<bean id="localeChangeInterceptor"
+				class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<property name="paramName" value="locale" />
+				<!--다국어 locale값을 보내주는 param명입니다. -->
+				<!-- localhost:8080/springboard/lofin?locale=en -->
+			</bean>
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<!-- <mvc:mapping path="/**/"/> <mvc:exclude-mapping path="/login"/> <mvc:exclude-mapping 
+				path="/board"/> <mvc:exclude-mapping path="/resources/**"/> <ref bean="loginInterceptor"/> -->
+			<mvc:mapping path="/**/" />
+			<mvc:exclude-mapping path="/board"/>
+			<mvc:exclude-mapping path="/login"/>
+			<mvc:exclude-mapping path="/resources/**"/>
+			<ref bean="loginInterceptor" />
+		</mvc:interceptor>
+		
 	
+	</mvc:interceptors>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+
+		
+	<task:scheduled-tasks>
+		<task:scheduled ref="myScheduler" method="crontest"
+			cron="0/5 * * * * ?" />
+	</task:scheduled-tasks>
+
+<!-- annotation 이용 -->
+	<task:annotation-driven scheduler="scheduler"/>
+	<task:scheduler id="scheduler" pool-size="10"/>
+
 </beans>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

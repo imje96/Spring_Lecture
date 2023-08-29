@@ -14,6 +14,8 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	@Autowired
+	private BoardDAO boradDAO;
 	
 	@Override
 	public List<BoardVO> getAllPost() {
@@ -35,5 +37,15 @@ public class BoardDAOImpl implements BoardDAO {
     public void writeNewPost(BoardVO boardVO) {
         sqlSessionTemplate.insert("springboard.board.dao.BoardDAO.insert", boardVO);
     }
+
+	@Override
+	public void increaseCount(int no) {
+			sqlSessionTemplate.update("springboard.board.dao.BoardDAO.increaseCount",no);
+	}
+
+	@Override
+	public void decreaseCount(int no) {
+		sqlSessionTemplate.update("springboard.board.dao.BoardDAO.decreaseCount",no);
+	}
 
 }

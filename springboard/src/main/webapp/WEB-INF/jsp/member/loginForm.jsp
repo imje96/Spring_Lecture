@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,7 @@
    <br>
 
 	<h1>로그인 페이지 입니다.</h1>
-	
+	<h1><spring:message code="label.title"></spring:message></h1>
 	<div align="left">
 		<form:form action="${pageContext.request.contextPath }/login" 
 			method="post" modelAttribute="loginVO">

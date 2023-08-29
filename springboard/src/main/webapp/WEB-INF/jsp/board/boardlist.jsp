@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,9 @@
    
 <!--    만약 currentuser가 있으면 ~님 안녕하세요 보여주고 로그아웃링크를 생성하고 없으면 로그인 링크를 생성한다 -->
    <c:if test="${empty currentUser }">
+   	<h1><spring:message code="label.title"></spring:message></h1>
         <a href="${pageContext.request.contextPath}/login">로그인</a>
+        
     </c:if>
     <c:if test="${not empty currentUser }">
         ${currentUser.name }님 안녕하세요.
@@ -34,7 +37,7 @@
 				<th>제목</th>
 				<th>지은이</th>
 				<th>작성일</th>
-				<th>조회수</th>
+				<th>댓글수</th>
 			</tr>
 
 			<c:forEach items="${boardlist }" var="board" varStatus="loop">

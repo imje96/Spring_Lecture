@@ -16,6 +16,19 @@
 		<result column="count" property="count" />
 	</resultMap>
 
+	<update id="decreaseCount" parameterType="int">
+		update t_board
+		set count = count-1
+		where no=#{no}
+	</update>
+
+	<update id="increaseCount" parameterType="int">
+		update t_board
+		set count = count+1
+		where no=#{no}
+	</update>
+
+
 	<insert id="insert" parameterType="kr.ac.kopo.board.vo.BoardVO">
 		insert into t_board(no, title, writer, content)
 		values (seq_t_board_no.nextval, #{title}, #{writer}, #{content} )

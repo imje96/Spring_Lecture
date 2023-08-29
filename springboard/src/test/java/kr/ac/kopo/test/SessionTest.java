@@ -32,5 +32,10 @@ public class SessionTest {
         BoardVO board = sqlSessionTemplate.selectOne("springboard.board.dao.BoardDAO.selectbyNo",2);        
         System.out.println(board);                
     }  
+ 
     
+//    @Test
+//    public void replyTest() {
+//    	boardDAO.increaseCont(3); // 3번 게시글 count를 1 올려라
+//    }
 }
